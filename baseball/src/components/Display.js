@@ -2,49 +2,58 @@ import React from 'react';
 import Dashboard from './Dashboard';
 
 class Display extends React.Component {
-    constructor() {
-        super();
-        this.state = {
-            hits: this.props.count,
-            strike: 0,
-            ball: 0,
-            foul: 0
-        }
 
-        let strike = () => {
-            if (hits >= 3) {
-                this.setState(strike = 0);
-            } else {
-                this.setState(strike + 1);
-            }
 
-        }
-        const ball = (props) => {
-            if (hits >= 4) {
-                this.setState(ball = 0);
-            } else {
-                this.setState(ball + 1);
-            }
-            const foul = (count) => {
-                if (hits === 2) {
-                    this.setState(foul = 2)
-                } else if (hits === 1) {
-                    this.setState(foul + 1)
-                } else {
-                    this.setState(foul + 1)
-                }
 
-            }
-        }
+    state = {
+        strikes: 0,
+        balls: 0,
+        fouls: 0
     }
+    strikesHandler = () => {
+        const strikes = this.state.strikes;
+        if (strikes < 2) {
+            this.setState({ strikes: this.state.strikes + 1 })
+        } else {
+            this.setState({ strikes: 0 })
+        }
+    };
+
+    ballsHandler = () => {
+        const balls = this.state.balls;
+        if (balls < 3) {
+            this.setState({ balls: this.state.balls + 1 })
+        } else {
+            this.setState({ balls: 0 });
+        }
+    };
+    hitsHandler = () => {
+        this.setState({ balls: 0, strikes: 0 })
+
+    }
+    foulHandler = () => {
+        const fouls = this.state.fouls;
+        if (fouls < 2) {
+            this.setState({ strikes: 2 })
+        } else if (fouls == 1) {
+            this.setState({ strikes: this.state.strikes + 1 })
+        } else {
+            this.setState({ fouls: this.state.fouls + 1 })
+        }
+
+    }
+
+
     render() {
         return (
 
 
             <div>
-                <Display
-                    hitStrikes={this.state.strike}
-                    hitBalls={this.state.ball} />
+                <Dashboard ballsHandler={this.ballsHandler}
+                    strikesHandler={this.strokeHandler}
+                    foulHandler={this.foulHandler}
+                />
+
             </div>
         )
 
